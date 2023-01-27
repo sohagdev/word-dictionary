@@ -1,11 +1,34 @@
+import { Component } from 'react'
+import Navbar from './components/Navbar'
 import './App.css'
 
-function App() {
-  return (
-    <div className='App'>
-      <h1 className='text-3xl font-bold underline text-red-500'>Dictionary</h1>
-    </div>
-  )
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      term: 'hello',
+      searchedWord: []
+    }
+  }
+  componentDidMount() {
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.term}`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState(() => {
+          return { searchedWord: data }
+        })
+      })
+  }
+
+  render() {
+    return (
+      <main className='App'>
+        <div className='container mx-auto'>
+          <Navbar />
+        </div>
+      </main>
+    )
+  }
 }
 
 export default App
