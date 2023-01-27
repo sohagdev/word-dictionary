@@ -8,22 +8,31 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      term: '',
-      searchedWord: []
+      term: 'dictionary',
+      searchedWord: null,
+      error: null
     }
   }
   componentDidMount() {
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.term}`)
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState(() => {
-          return { searchedWord: data }
-        })
-      })
+    this.fetchWord()
   }
+
+  fetchWord() {
+    const endpoint = `https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.term}`
+    const headers = new Headers({
+      Authorization: 'Bearer YOUR_API_KEY'
+    })
+    // fetch(endpoint, headers)
+    //   .then((response) => response.json())
+    //   .then((data) => this.setState({ searchedWord: data }))
+    //   .catch((error) => {
+    //     this.setState({ error })
+    //   })
+  }
+
   componentDidUpdate(prevState) {
     if (prevState.term !== this.state.term) {
-      this.componentDidMount()
+      this.fetchWord()
     }
   }
 
@@ -32,14 +41,13 @@ class App extends Component {
       return { term: text }
     })
   }
-
   render() {
     return (
       <main className='App'>
         <div className='container mx-auto'>
           <Navbar />
           <SearchWord onChangeHandler={this.onSearchedWord} />
-          <WordContent wordContent={this.state.searchedWord} />
+          <WordContent wordDetails={this.state.searchedWord} />
         </div>
       </main>
     )
