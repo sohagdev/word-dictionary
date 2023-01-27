@@ -1,12 +1,14 @@
 import { Component } from 'react'
 import Navbar from './components/Navbar'
+import SearchWord from './components/SearchWord'
+import WordContent from './components/WordContent'
 import './App.css'
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      term: 'hello',
+      term: '',
       searchedWord: []
     }
   }
@@ -19,12 +21,25 @@ class App extends Component {
         })
       })
   }
+  componentDidUpdate(prevState) {
+    if (prevState.term !== this.state.term) {
+      this.componentDidMount()
+    }
+  }
+
+  onSearchedWord = (text) => {
+    this.setState(() => {
+      return { term: text }
+    })
+  }
 
   render() {
     return (
       <main className='App'>
         <div className='container mx-auto'>
           <Navbar />
+          <SearchWord onChangeHandler={this.onSearchedWord} />
+          <WordContent wordContent={this.state.searchedWord} />
         </div>
       </main>
     )
