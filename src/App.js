@@ -1,57 +1,50 @@
-import { Component } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
-import SearchWord from './components/SearchWord'
+import SearchBar from './components/SearchBar'
 import WordContent from './components/WordContent'
+import axios from 'axios'
 import './App.css'
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      term: 'dictionary',
-      searchedWord: null,
-      error: null
+const App = () => {
+  const [term, setTerm] = useState('dictionary')
+  const [searchedWord, setSearchedWord] = useState([])
+  const [errors, setErrors] = useState(null)
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    fetchWord()
+  }, [term])
+
+  const fetchWord = () => {
+    const options = {
+      method: 'GET',
+      url: `https://api.dictionaryapi.dev/api/v2/entries/en/${term}`
     }
+
+    axios
+      .request(options)
+      .then(function (response) {
+        setSearchedWord(response.data[0])
+        console.log(response.data[0])
+      })
+      .catch(function (error) {
+        setErrors(error)
+        console.error(errors)
+      })
   }
-  componentDidMount() {
-    this.fetchWord()
+  const onSearchedWord = (text) => {
+    setTerm(text)
   }
 
-  fetchWord() {
-    const endpoint = `https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.term}`
-    const headers = new Headers({
-      Authorization: 'Bearer YOUR_API_KEY'
-    })
-    // fetch(endpoint, headers)
-    //   .then((response) => response.json())
-    //   .then((data) => this.setState({ searchedWord: data }))
-    //   .catch((error) => {
-    //     this.setState({ error })
-    //   })
-  }
-
-  componentDidUpdate(prevState) {
-    if (prevState.term !== this.state.term) {
-      this.fetchWord()
-    }
-  }
-
-  onSearchedWord = (text) => {
-    this.setState(() => {
-      return { term: text }
-    })
-  }
-  render() {
-    return (
-      <main className='App'>
-        <div className='container mx-auto'>
-          <Navbar />
-          <SearchWord onChangeHandler={this.onSearchedWord} />
-          <WordContent wordDetails={this.state.searchedWord} />
-        </div>
-      </main>
-    )
-  }
+  return (
+    <main className='App dark:bg-gray-900 h-full bg-white dark:text-slate-300 text-black'>
+      <div className='container mx-auto'>
+        <Navbar />
+        <SearchBar onChangeHandler={onSearchedWord} />
+        <WordContent wordDetails={searchedWord} />
+      </div>
+    </main>
+  )
 }
 
 export default App
