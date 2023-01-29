@@ -37,7 +37,7 @@ const App = () => {
   }
 
   return (
-    <main className='App dark:bg-gray-900 h-full bg-white dark:text-slate-300 text-black'>
+    <main className='App dark:bg-gray-900 h-screen bg-white dark:text-slate-300 text-black'>
       <div className='container mx-auto'>
         <Navbar />
         <SearchBar onChangeHandler={onSearchedWord} />
