@@ -9,7 +9,8 @@ const App = () => {
   const [term, setTerm] = useState('dictionary')
   const [searchedWord, setSearchedWord] = useState([])
   const [errors, setErrors] = useState(null)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [fontFamily, setFontFamily] = useState('serif')
   useEffect(() => {
     fetchWord()
   }, [term])
@@ -37,6 +38,9 @@ const App = () => {
   const handleClick = () => {
     setIsDarkMode(!isDarkMode)
   }
+  const handleChange = (e) => {
+    setFontFamily(e.target.value)
+  }
   return (
     <main
       className={`App h-screen  ${
@@ -44,9 +48,15 @@ const App = () => {
           ? 'bg-white text-slate-700'
           : 'dark:bg-gray-900 dark:text-slate-300 '
       }`}
+      style={{ fontFamily }}
     >
       <div className='container mx-auto'>
-        <Navbar isDarkMode={isDarkMode} handleClick={handleClick} />
+        <Navbar
+          isDarkMode={isDarkMode}
+          handleClick={handleClick}
+          fontFamily={fontFamily}
+          handleChange={handleChange}
+        />
         <SearchBar isDarkMode={isDarkMode} onChangeHandler={onSearchedWord} />
         <WordContent wordDetails={searchedWord} />
       </div>

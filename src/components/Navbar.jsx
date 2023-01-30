@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { GiBlackBook } from 'react-icons/gi'
 import { BsToggleOff, BsToggleOn, BsMoonFill, BsMoon } from 'react-icons/bs'
 
-const Navbar = ({ isDarkMode, handleClick }) => {
+const Navbar = ({ isDarkMode, handleClick, fontFamily, handleChange }) => {
   return (
     <div className='navbar flex justify-between container py-5 px-5'>
       <a href='/'>
@@ -16,15 +16,17 @@ const Navbar = ({ isDarkMode, handleClick }) => {
           <select
             name='option'
             id='option'
+            value={fontFamily}
+            onChange={handleChange}
             className={`${
               isDarkMode
                 ? 'bg-gray-50 border-gray-300 text-gray-900'
                 : 'bg-gray-600 border-gray-800 text-white'
             } text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
           >
-            <option value='serif'>Serif</option>
-            <option value='sans serif'>Sans Serif</option>
-            <option value='monospace '>Monospace</option>
+            <option value='noto-serif'>Serif</option>
+            <option value='sans-serif'>Sans Serif</option>
+            <option value='cursive'>Monospace</option>
           </select>
         </form>
         <button onClick={handleClick} className='flex-auto mx-5' type='button'>
