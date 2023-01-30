@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
-const SearchBar = ({ onChangeHandler }) => {
+const SearchBar = ({ onChangeHandler, isDarkMode }) => {
   const [text, setText] = useState('')
   const onTextSubmit = (e) => {
     e.preventDefault()
@@ -18,7 +18,11 @@ const SearchBar = ({ onChangeHandler }) => {
         <input
           type='text'
           id='simple-search'
-          className='block w-full p-4 pl-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          className={`block w-full p-4 pl-5 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 ${
+            isDarkMode
+              ? 'text-gray-900 border border-gray-300 bg-gray-50'
+              : 'text-white border border-gray-300 bg-gray-600'
+          }`}
           placeholder='Search'
           onChange={(e) => setText(e.target.value)}
         />

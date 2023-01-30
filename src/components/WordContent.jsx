@@ -14,7 +14,7 @@ const WordContent = ({ wordDetails }) => {
   return (
     <ErrorBoundary>
       {!phonetics ? (
-        <div>'Loading...'</div>
+        <div className='text-5xl font-bold'>Loading Data...</div>
       ) : (
         <div className='container py-5 px-5 dark:text-slate-300 text-black'>
           <div className='word-title flex justify-between '>

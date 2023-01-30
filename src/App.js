@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Navbar from './components/Navbar'
 import SearchBar from './components/SearchBar'
 import WordContent from './components/WordContent'
-import axios from 'axios'
 import './App.css'
 
 const App = () => {
   const [term, setTerm] = useState('dictionary')
   const [searchedWord, setSearchedWord] = useState([])
   const [errors, setErrors] = useState(null)
-  const [hasError, setHasError] = useState(false)
-
+  const [isDarkMode, setIsDarkMode] = useState(false)
   useEffect(() => {
     fetchWord()
   }, [term])
@@ -35,12 +34,20 @@ const App = () => {
   const onSearchedWord = (text) => {
     setTerm(text)
   }
-
+  const handleClick = () => {
+    setIsDarkMode(!isDarkMode)
+  }
   return (
-    <main className='App dark:bg-gray-900 h-screen bg-white dark:text-slate-300 text-black'>
+    <main
+      className={`App h-screen  ${
+        isDarkMode
+          ? 'bg-white text-slate-700'
+          : 'dark:bg-gray-900 dark:text-slate-300 '
+      }`}
+    >
       <div className='container mx-auto'>
-        <Navbar />
-        <SearchBar onChangeHandler={onSearchedWord} />
+        <Navbar isDarkMode={isDarkMode} handleClick={handleClick} />
+        <SearchBar isDarkMode={isDarkMode} onChangeHandler={onSearchedWord} />
         <WordContent wordDetails={searchedWord} />
       </div>
     </main>
