@@ -43,10 +43,10 @@ const App = () => {
   }
   return (
     <main
-      className={`App h-screen  ${
+      className={`App block ${
         isDarkMode
-          ? 'bg-white text-slate-700'
-          : 'dark:bg-gray-900 dark:text-slate-300 '
+          ? 'bg-white text-slate-900 h-full'
+          : 'bg-gray-900 text-slate-300 h-screen'
       }`}
       style={{ fontFamily }}
     >
