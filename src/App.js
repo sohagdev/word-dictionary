@@ -46,7 +46,7 @@ const App = () => {
       className={`App block ${
         isDarkMode
           ? 'bg-white text-slate-900 h-full'
-          : 'bg-gray-900 text-slate-300 h-screen'
+          : 'bg-gray-900 text-slate-300 h-full lg:h-screen'
       }`}
       style={{ fontFamily }}
     >
