@@ -12,10 +12,6 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [fontFamily, setFontFamily] = useState('serif')
   useEffect(() => {
-    fetchWord()
-  }, [term])
-
-  const fetchWord = () => {
     const options = {
       method: 'GET',
       url: `https://api.dictionaryapi.dev/api/v2/entries/en/${term}`
@@ -31,7 +27,8 @@ const App = () => {
         setErrors(error)
         console.error(errors)
       })
-  }
+  }, [term, errors])
+
   const onSearchedWord = (text) => {
     setTerm(text)
   }
